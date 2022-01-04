@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>{% block title %} Millionaire {% endblock %}</title>
+  <style>
+body{
+  font-size: 20px;
+}
+
+a{
+  text-decoration: none;
+  color:black;
+}
+
+th, td {
+  border: 1px solid black;
+
+}
+tr, td {
+  padding: 5px;
+  text-align: left;
+
+}
+li{
+  list-style: none;
+}
+h3{
+    margin-top: 40px;
+    margin-bottom: .5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+</style>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+  <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+
+  <div class="collapse navbar-collapse justify-content-arround" id="navbarNav">
+    {% if user.is_authenticated %}
+
+        <h2>Hello {{ user.username }}</h2>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+
+            <a href="{% url 'score' %}" class="nav-link" >Top 10</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'account_signup' %}">Register</a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Millionaire</h1>
+    {% if user.is_authenticated %}
+        <br>
+        {% if winner %}
+        <div class="win" >
+          <h2>congratutaltions {{ user.username }}, you win the game and your score is: {{score}}</h2>
+        </div>
+        {% elif right_answer %}
+        <div class="lose" >
+          <h2>Sorry {{ user.username }}, but you lose the game and your score is: {{score}}</h2>
+          <p><strong>The right answer(s) was {{right_answer}} </strong> </p>
+        </div>
+        {% endif %}
+        <div class="playgame">
+          <a href="{% url 'gameplay' %}" class="btn btn-primary">New game</a>
+        </div>
+    {% else %}
+        <h2>Please login to play a game!</h2>
+    {% endif %}
+  </div>
+</div>
+
+
+{% block content %}
+{% endblock %}
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% block scripts %}
+
+{% endblock %}
+</html>

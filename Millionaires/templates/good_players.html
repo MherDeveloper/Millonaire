@@ -1,0 +1,19 @@
+{% extends "home.html" %}
+{% block content %}
+{% block title %} Top 10 Players {% endblock %}
+
+  <div class="container">
+    {% if scores %}
+      <div class="jumbotron">
+        <ol>
+          {% for score in scores %}
+          <li> Name {{ score.user }} Point {{ score.score }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+    {% else %}
+      <h2>Empty</h2>
+    {% endif %}
+  </div>
+
+{% endblock %}
